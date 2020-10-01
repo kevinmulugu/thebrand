@@ -1,3 +1,7 @@
+///
+/// The Class for the brand API theme
+///
+///
 class BrandTheme {
   final String id;
   final String catalogid;
