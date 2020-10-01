@@ -21,7 +21,7 @@ class _BrandAppBarState extends State<BrandAppBar> {
               backgroundColor: kCircularAvatarBackgroundColor,
               child: Text(
                 'S',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 12.0),
               ),
             ),
           )
