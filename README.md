@@ -2,6 +2,10 @@
 
 The Brand demo App.
 
+Screenshot
+
+![Screenshot](./screenshots/designs.png)
+
 ## Getting Started
 
 This project is a starting point for the The Brand demo app
