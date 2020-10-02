@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:thebrand/models/brand_theme.dart';
+import 'package:thebrand/screens/design_details.dart';
 import 'package:thebrand/values/colors.dart';
 import 'package:thebrand/values/strings.dart';
 import 'package:thebrand/widgets/theme_item.dart';
@@ -33,24 +34,16 @@ class _MyDesignsScreenState extends State<MyDesignsScreen> {
         Container(
           padding: EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey[300]
-              )
-            )
-          ),
+              border: Border(bottom: BorderSide(color: Colors.grey[300]))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: kBottomNavigationSelectedItemColor,
-                width: 3
-              )
-            )
-          ),
+                    border: Border(
+                        bottom: BorderSide(
+                            color: kBottomNavigationSelectedItemColor,
+                            width: 3))),
                 child: Text(kCategory1Label),
               ),
               Container(
@@ -66,8 +59,10 @@ class _MyDesignsScreenState extends State<MyDesignsScreen> {
           ),
         ),
         ListTile(
-          title: Text('New Designs', style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text('Browse our latest designs', style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text('New Designs',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text('Browse our latest designs',
+              style: TextStyle(fontWeight: FontWeight.bold)),
           trailing: FaIcon(FontAwesomeIcons.arrowRight),
         ),
         Expanded(
@@ -76,12 +71,15 @@ class _MyDesignsScreenState extends State<MyDesignsScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return GridView.count(
-
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   crossAxisCount: 3,
                   children: List.generate(snapshot.data.length, (index) {
                     return ThemeItem(
+                        onTap: () {
+                          onDesignItemClicked(snapshot.data[index].catalogid,
+                              snapshot.data[index].id);
+                        },
                         image: snapshot.data[index].picture,
                         title: snapshot.data[index].title);
                   }),
@@ -103,10 +101,10 @@ class _MyDesignsScreenState extends State<MyDesignsScreen> {
     );
   }
 
-///
-/// Loads the themes from the brands API
-///
-///
+  ///
+  /// Loads the themes from the brands API
+  ///
+  ///
   Future<List<BrandTheme>> getThemes() async {
     final response = await http.post(themesUrl);
     if (response.statusCode == 200) {
@@ -120,5 +118,14 @@ class _MyDesignsScreenState extends State<MyDesignsScreen> {
       // then throw an exception.
       throw Exception('Failed to load album');
     }
+  }
+
+  onDesignItemClicked(String catalodId, String id) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              DesignDetailsScreen(designId: id, userId: catalodId)),
+    );
   }
 }
