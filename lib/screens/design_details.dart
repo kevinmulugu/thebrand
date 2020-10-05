@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:thebrand/models/design_detail.dart';
+import 'package:thebrand/screens/design_layers.dart';
 import 'package:thebrand/values/strings.dart';
 import 'package:http/http.dart' as http;
 import 'package:thebrand/widgets/brand_image.dart';
@@ -75,7 +76,16 @@ class _DesignDetailsScreenState extends State<DesignDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         RaisedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DesignLayerScreen(
+                                          thumbnail: snapshot.data.picture,
+                                          id: snapshot.data.id,
+                                        )),
+                              );
+                            },
                             color: Colors.green,
                             child: Text('Button',
                                 style: TextStyle(color: Colors.white)))
@@ -93,8 +103,7 @@ class _DesignDetailsScreenState extends State<DesignDetailsScreen> {
                         children: [
                           Container(child: Text(snapshot.data.category)),
                           Container(child: Text(snapshot.data.public)),
-                          Container(
-                              child: Text(snapshot.data.adddate)),
+                          Container(child: Text(snapshot.data.adddate)),
                           Container(child: Text(snapshot.data.viewnum)),
                         ],
                       ),
